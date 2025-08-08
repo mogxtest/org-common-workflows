@@ -260,8 +260,8 @@ jobs:
         run: |
           start_time=$(date +%s)
           set +e
-          # ./build/ci/run_ci.py 2>&1 | tee ci-output.log
-          mkdir /adr  2>&1 | tee ci-output.log
+          ./build/ci/run_ci.py 2>&1 | tee ci-output.log
+          # mkdir /adr  2>&1 | tee ci-output.log
           EXIT_CODE=$?
           set -e
           # ./build/ci/run_ci.py
