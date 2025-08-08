@@ -256,7 +256,7 @@ jobs:
           repo sync -j$(nproc)
 
       - name: Run kernel CI
-        id: run ci
+        id: run_ci
         run: |
           start_time=$(date +%s)
           set +e
