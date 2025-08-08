@@ -208,7 +208,7 @@ jobs:
           # RUN_URL='${{ steps.init.outputs.run_url }}'
           # echo $RUN_URL
           tree .
-          mkdir /abdcr/dsfsdf
+          exit 1
         
         # 超时设置
         timeout-minutes: 120
