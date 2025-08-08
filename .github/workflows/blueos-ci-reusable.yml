@@ -50,27 +50,13 @@ jobs:
           echo "source_number=${{ inputs.issue_number }}" >> $GITHUB_OUTPUT
           RUN_URL="${{ inputs.server_url }}/${{ inputs.repository }}/actions/runs/${{ inputs.run_id }}"
           echo "run_url=$RUN_URL" >> $GITHUB_OUTPUT
-          # # 确定触发器类型
-          # if [ -n "${{ github.event.issue.pull_request }}" ]; then
-          #   echo "trigger_type=pr" >> $GITHUB_OUTPUT
-          #   echo "source_number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
-          # else
-          #   echo "trigger_type=issue" >> $GITHUB_OUTPUT
-          #   echo "source_number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
-          # fi
-           
-          # # 构建状态链接
-          # RUN_URL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
-            
-          # # 保存运行URL
-          # echo "run_url=$RUN_URL" >> $GITHUB_OUTPUT
  
       # 步骤2: 提取PR链接
       - name: Extract PR links
         id: extract-prs
         run: |
           # 提取所有PR链接
-          PR_LINKS=$(echo "${{ inputs.comment.body }}" | grep -oE 'https://github.com/[^/]+/[^/]+/pull/[0-9]+' | sort | uniq)
+          PR_LINKS=$(echo "${{ inputs.comment_body }}" | grep -oE 'https://github.com/[^/]+/[^/]+/pull/[0-9]+' | sort | uniq)
           echo "PR_LINKS:"
           echo "$PR_LINKS"
        
