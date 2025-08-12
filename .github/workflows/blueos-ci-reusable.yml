@@ -36,6 +36,8 @@ jobs:
     env:
       ORCHESTRATOR_TOKEN: ${{ secrets.REPO_ORCHESTRATOR_TOKEN01 }}
       MANIFEST_REPO: https://github.com/mogxtest/manifests
+      # PROD
+      # MANIFEST_REPO: https://github.com/vivoblueos/manifests.git
       
     steps:
       # 步骤1: 初始设置和状态通知
@@ -198,17 +200,7 @@ jobs:
             
             cd - >/dev/null
           done
- 
-      # 步骤7: 执行构建
-      # - name: Build BlueOS
-      #   run: |
-      #     cd blueos
-           
-          # 进度通知
-          # RUN_URL='${{ steps.init.outputs.run_url }}'
-          # echo $RUN_URL
-          # tree .
-          # exit 1
+
       - name: Install packages
         run: |
           sudo apt-get update
@@ -250,6 +242,7 @@ jobs:
           echo "$PWD/sysroot/usr/local/bin" >> "$GITHUB_PATH"
           echo "$PWD/sysroot/usr/local/lib/rustlib/x86_64-unknown-linux-gnu/bin" >> "$GITHUB_PATH"
 
+      # need to delete with prod 
       - name: Init repo and sync
         run: |
           repo init -u https://github.com/vivoblueos/manifests.git -b main -m manifest.xml
@@ -258,14 +251,13 @@ jobs:
       - name: Run kernel CI
         id: run-kernel-ci
         run: |
+          cd blueos
           start_time=$(date +%s)
           set +e
           ./build/ci/run_ci.py 2>&1 | tee ci-output.log
           # mkdir /adr  2>&1 | tee ci-output.log
           EXIT_CODE=$?
           set -e
-          # ./build/ci/run_ci.py
-          # echo "Test"
 
           end_time=$(date +%s)
           duration=$((end_time - start_time))
